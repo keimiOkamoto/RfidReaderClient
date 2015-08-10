@@ -18,13 +18,19 @@ public class DynamoDBFridgeManagerImpl implements FridgeManager {
 
     @Override
     public void addToFridge(String itemId) {
-        Map<String, Integer> itemAndQuantity = fridgeRetrieved.getContents().stream().filter(map -> map.containsKey(itemId)).collect(Collectors.toList()).get(0);
+        Map<String, Integer> itemAndQuantity = getItemAndQuantity(itemId);
         itemAndQuantity.put(itemId, itemAndQuantity.get(itemId) + 1);
-
         dynamoDBMapper.save(fridgeRetrieved);
     }
 
     @Override
     public void remove(String itemId) {
+        Map<String, Integer> itemAndQuantity = getItemAndQuantity(itemId);
+        itemAndQuantity.put(itemId, (itemAndQuantity.get(itemId) - 1));
+        dynamoDBMapper.save(fridgeRetrieved);
+    }
+
+    private Map<String, Integer> getItemAndQuantity(String itemId) {
+        return fridgeRetrieved.getContents().stream().filter(map -> map.containsKey(itemId)).collect(Collectors.toList()).get(0);
     }
 }

@@ -27,7 +27,8 @@ public class Start {
             System.out.println("Read: " + id);
 
             if (!id.isEmpty() || !id.equals("")) {
-                dynamoDBFridgeMAnager.addToFridge(id);
+                dynamoDBFridgeMAnager.remove(id);
+
 
                 FoodItem foodItem = dynamoDBItemManager.get(id);
 
