@@ -13,7 +13,6 @@ public interface FoodItem {
 
     String getExpiryDate();
 
-
     int getFoodCode();
 
     void setGm(boolean gm);

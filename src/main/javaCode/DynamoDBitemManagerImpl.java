@@ -1,28 +1,17 @@
 package javaCode;
 
-import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 
 public class DynamoDBitemManagerImpl implements DynamoDBItemManager {
 
-    private DynamoDBMapper mapper;
+    private DynamoDBMapper dynamoDBMapper;
 
-    public DynamoDBitemManagerImpl(AmazonDynamoDBClient dynamoDBClient) {
-        mapper = new DynamoDBMapper(dynamoDBClient);
+    public DynamoDBitemManagerImpl(DynamoDBMapper dynamoDBMapper) {
+        this.dynamoDBMapper = dynamoDBMapper;
     }
 
     @Override
     public FoodItem get(String id) {
-        return mapper.load(FoodItemImpl.class, id);
-    }
-
-    @Override
-    public boolean removeItem() {
-        return false;
-    }
-
-    @Override
-    public void put(FoodItem foodItem) {
-
+        return dynamoDBMapper.load(FoodItemImpl.class, id);
     }
 }
