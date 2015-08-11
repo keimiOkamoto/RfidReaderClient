@@ -6,31 +6,29 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class DynamoDBFridgeManagerImpl implements FridgeManager {
-    private String fridgeId;
     private DynamoDBMapper dynamoDBMapper;
-    private Fridge fridgeRetrieved;
+    private FridgeImpl fridgeImplRetrieved;
 
     public DynamoDBFridgeManagerImpl(String fridgeId, DynamoDBMapper dynamoDBMapper) {
-        this.fridgeId = fridgeId;
         this.dynamoDBMapper = dynamoDBMapper;
-        fridgeRetrieved = dynamoDBMapper.load(Fridge.class, fridgeId);
+        fridgeImplRetrieved = dynamoDBMapper.load(FridgeImpl.class, fridgeId);
     }
 
     @Override
-    public void addToFridge(String itemId) {
+    public void addToContents(String itemId) {
         Map<String, Integer> itemAndQuantity = getItemAndQuantity(itemId);
         itemAndQuantity.put(itemId, itemAndQuantity.get(itemId) + 1);
-        dynamoDBMapper.save(fridgeRetrieved);
+        dynamoDBMapper.save(fridgeImplRetrieved);
     }
 
     @Override
-    public void remove(String itemId) {
+    public void removeFromContents(String itemId) {
         Map<String, Integer> itemAndQuantity = getItemAndQuantity(itemId);
         itemAndQuantity.put(itemId, (itemAndQuantity.get(itemId) - 1));
-        dynamoDBMapper.save(fridgeRetrieved);
+        dynamoDBMapper.save(fridgeImplRetrieved);
     }
 
     private Map<String, Integer> getItemAndQuantity(String itemId) {
-        return fridgeRetrieved.getContents().stream().filter(map -> map.containsKey(itemId)).collect(Collectors.toList()).get(0);
+        return fridgeImplRetrieved.getContents().stream().filter(map -> map.containsKey(itemId)).collect(Collectors.toList()).get(0);
     }
 }

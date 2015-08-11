@@ -1,8 +1,8 @@
 package javaCode;
 
 public interface FridgeManager {
-    void addToFridge(String item);
+    void addToContents(String item);
 
-    void remove(String itemId);
+    void removeFromContents(String itemId);
 
 }

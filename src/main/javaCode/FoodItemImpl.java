@@ -7,7 +7,7 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 import java.util.List;
 import java.util.Map;
 
-@DynamoDBTable(tableName="Products")
+@DynamoDBTable(tableName = "Products")
 public class FoodItemImpl implements FoodItem {
     private String id;
     private int allergenCode;
@@ -16,10 +16,11 @@ public class FoodItemImpl implements FoodItem {
     private int foodCode;
     private boolean gm;
     private String name;
-    private List<Map<String,String>> nutritionDetails;
+    private List<Map<String, Double>> nutritionDetails;
     private boolean organic;
+    private int netContent;
 
-    @DynamoDBHashKey(attributeName="ProductID")
+    @DynamoDBHashKey(attributeName = "ProductID")
     @Override
     public String getId() {
         return id;
@@ -29,7 +30,7 @@ public class FoodItemImpl implements FoodItem {
         this.id = id;
     }
 
-    @DynamoDBAttribute(attributeName="AllergenCode")
+    @DynamoDBAttribute(attributeName = "AllergenCode")
     @Override
     public int getAllergenCode() {
         return allergenCode;
@@ -39,7 +40,7 @@ public class FoodItemImpl implements FoodItem {
         this.allergenCode = allergenCode;
     }
 
-    @DynamoDBAttribute(attributeName="ExpiryDate")
+    @DynamoDBAttribute(attributeName = "ExpiryDate")
     @Override
     public String getExpiryDate() {
         return expiryDate;
@@ -49,7 +50,7 @@ public class FoodItemImpl implements FoodItem {
         this.expiryDate = expiryDate;
     }
 
-    @DynamoDBAttribute(attributeName="Feed")
+    @DynamoDBAttribute(attributeName = "Feed")
     public List<String> getFeed() {
         return feed;
     }
@@ -59,7 +60,7 @@ public class FoodItemImpl implements FoodItem {
     }
 
     @Override
-    @DynamoDBAttribute(attributeName="FoodCode")
+    @DynamoDBAttribute(attributeName = "FoodCode")
     public int getFoodCode() {
         return foodCode;
     }
@@ -68,7 +69,7 @@ public class FoodItemImpl implements FoodItem {
         this.foodCode = foodCode;
     }
 
-    @DynamoDBAttribute(attributeName="GM")
+    @DynamoDBAttribute(attributeName = "GM")
     public boolean isGm() {
         return gm;
     }
@@ -78,7 +79,7 @@ public class FoodItemImpl implements FoodItem {
         this.gm = gm;
     }
 
-    @DynamoDBAttribute(attributeName="Name")
+    @DynamoDBAttribute(attributeName = "Name")
     @Override
     public String getName() {
         return name;
@@ -88,17 +89,17 @@ public class FoodItemImpl implements FoodItem {
         this.name = name;
     }
 
-    @DynamoDBAttribute(attributeName="NutritionPer100ml")
+    @DynamoDBAttribute(attributeName = "Nutrition")
     @Override
-    public List<Map<String,String>> getNutritionDetails() {
+    public List<Map<String, Double>> getNutritionDetails() {
         return nutritionDetails;
     }
 
-    public void setNutritionDetails(List<Map<String,String>> nutritionDetails) {
+    public void setNutritionDetails(List<Map<String, Double>> nutritionDetails) {
         this.nutritionDetails = nutritionDetails;
     }
 
-    @DynamoDBAttribute(attributeName="Organic")
+    @DynamoDBAttribute(attributeName = "Organic")
     @Override
     public boolean isOrganic() {
         return organic;
@@ -106,5 +107,15 @@ public class FoodItemImpl implements FoodItem {
 
     public void setOrganic(boolean organic) {
         this.organic = organic;
+    }
+
+    @DynamoDBAttribute(attributeName = "NetContent")
+    @Override
+    public int getNetContent() {
+        return netContent;
+    }
+
+    public void setNetContent(int netContent) {
+        this.netContent = netContent;
     }
 }

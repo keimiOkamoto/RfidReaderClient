@@ -4,11 +4,9 @@ package javaCode;
 import java.util.Scanner;
 
 public class RfidReaderImpl implements RfidReader {
-    private static Scanner scanner;
     private static RfidReader rfidReader = null;
 
     private RfidReaderImpl() {
-        scanner = new Scanner(System.in);
     }
 
     public static RfidReader getInstance() {
@@ -17,10 +15,10 @@ public class RfidReaderImpl implements RfidReader {
     }
 
     @Override
-    public String readCard() {
+    public String readCard(Scanner scanner) {
         String readerInput = scanner.next();
 
-        if (!readerInput.equals("") || !readerInput.isEmpty()) return readerInput;
-        return null;
+        if (readerInput.equals("") || readerInput.isEmpty()) return null;
+        return readerInput;
     }
 }

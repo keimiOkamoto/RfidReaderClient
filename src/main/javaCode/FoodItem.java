@@ -19,8 +19,10 @@ public interface FoodItem {
 
     String getName();
 
-    List<Map<String,String>> getNutritionDetails();
+    List<Map<String,Double>> getNutritionDetails();
 
     boolean isOrganic();
+
+    int getNetContent();
 
 }

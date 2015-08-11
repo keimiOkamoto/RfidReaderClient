@@ -1,6 +1,8 @@
 package javaCode;
 
 
+import java.util.Scanner;
+
 public interface RfidReader {
-    String readCard();
+    String readCard(Scanner scanner);
 }
