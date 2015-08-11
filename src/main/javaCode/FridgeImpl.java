@@ -33,5 +33,4 @@ public class FridgeImpl implements Fridge {
     public void setContents(List<Map<String, Integer>> contents) {
         this.contents = contents;
     }
-
 }

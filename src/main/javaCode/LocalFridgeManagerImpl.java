@@ -3,41 +3,36 @@ package javaCode;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 public class LocalFridgeManagerImpl implements FridgeManager {
 
-    private Fridge fridgeImpl;
+    private Fridge fridge;
 
-    public LocalFridgeManagerImpl(Fridge fridgeImpl) {
-        this.fridgeImpl = fridgeImpl;
+    public LocalFridgeManagerImpl(Fridge fridge) {
+        this.fridge = fridge;
     }
 
     @Override
     public void addToContents(String item) {
-        List<Map<String, Integer>> currentContents = fridgeImpl.getContents();
-        Map<String, Integer> product = getItemAndQuantity(item);
+        List<Map<String, Integer>> currentContents = fridge.getContents();
+        Optional<Map<String, Integer>> product = getItemAndQuantity(item);
 
-        if (product == null) {
-            System.out.println("product == null");
-            product = new HashMap<>();
-            product.put(item, 1);
-            currentContents.add(product);
+        if(product.isPresent()) {
+            product.get().put(item, product.get().get(item) + 1);
         } else {
-            product.put(item, product.get(item) + 1);
-            System.out.println("should see thios");
+            Map<String, Integer>productNew = new HashMap<>();
+            productNew.put(item, 1);
+            currentContents.add(productNew);
         }
-        fridgeImpl.setContents(currentContents);
-        System.out.println(fridgeImpl.getContents().get(0).get(item) + " wowpowowpw");
+        fridge.setContents(currentContents);
     }
 
     @Override
     public void removeFromContents(String itemId) {
-
     }
 
-    private Map<String, Integer> getItemAndQuantity(String itemId) {
-        if (!fridgeImpl.getContents().contains(itemId)) return null;
-        return fridgeImpl.getContents().stream().filter(map -> map.containsKey(itemId)).collect(Collectors.toList()).get(0);
+    private Optional<Map<String, Integer>> getItemAndQuantity(String itemId) {
+       return fridge.getContents().stream().filter(map -> map.containsKey(itemId)).findFirst();
     }
 }
